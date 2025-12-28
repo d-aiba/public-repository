@@ -1,0 +1,469 @@
+%----------
+%----------
+%----------
+\title{様相論理の近傍意味論は\vspace{2mm}\\S4フレームなら\vspace{2mm}\\位相空間論の意味での「近傍系」になる話！\vspace{2mm}}
+\author{饗庭 大地 (Aiba, Daichi)}
+% \author{こっとん (\href{https://twitter.com/CottonShampoo}{@CottonShampoo}) }
+\date{2023年12月21日 木曜日}
+%----------
+\documentclass[
+		% book,
+		head_space=20mm,
+		foot_space=20mm,
+		gutter=10mm,
+		line_length=190mm
+]{jlreq}
+%----------
+\input 0_preamble.tex
+\usepackage{docmute} %ファイル分割
+%----------
+\usepackage{stmaryrd}
+
+\begin{document}
+
+
+\maketitle %タイトル
+
+\vspace{2mm}
+
+\begin{screen}
+	\begin{center}
+		\href{https://adventar.org/calendars/8737}{Mathematical Logic Advent Calendar 2023}\\の21日目の投稿です。
+	\end{center}
+\end{screen}
+
+\vspace{4mm}
+
+\begin{screen}
+	\begin{center}
+		このドキュメントは，見やすく読みまちがえにくい\\ユニバーサルデザインフォントを採用しています。
+	\end{center}
+\end{screen}
+
+\vspace{3mm}
+
+\tableofcontents %目次
+
+
+%----------
+% \setcounter{part}{-1}
+% \setcounter{chapter}{-1}
+% \renewcommand{\thepart}{\arabic{part}}
+% \renewcommand{\thesection}{\arabic{section}}
+\setcounter{section}{-1}
+%----------
+
+
+\clearpage
+
+
+\section{前置き}
+
+\subsection{この記事が想定する対象読者}
+
+この記事の対象読者としては，様相論理の「クリプキ意味論」（関係意味論）のことをそれなりに知っているが，「近傍意味論」についてはあまり知らない人を想定しています。たとえば，$K$とか$S4$とか聞いたことあるよ，というくらいの予備知識があれば，この記事を読むのにちょうどいいと思われます。
+
+特に「近傍意味論」という名前を聞いて，「位相空間論の近傍の話と何か関係があるのかな」と反応したくなるくらいの人をターゲットとした，ひとまず入門向けの記事です。
+
+この記事では，近傍意味論と位相空間との関わり合いに重点を置いて紹介します。近傍意味論には，他にも面白い話題がたくさんあるので，これをきっかけに学んでください。
+
+% \vspace{3mm}
+
+\subsection{この記事が読者たちと一緒にめざす4つの目標}
+
+この記事では，以下の4つのことを目標とします。
+
+\begin{enumerate}
+	\item 様相論理の近傍意味論がどんなものか知る。
+	\item 近傍意味論において，必然化則「$A\vDash B$ならば$\Box A\vDash\Box B$」が成り立たないことを実際に確かめる。
+	\item $S4$フレームならば，近傍意味論における「近傍系」が位相空間論の「近傍系」と同じものになることを示す。
+	\item 位相空間論の「開核演算子・閉包演算子」が，まさに$S4$の様相演算子と同じふるまいをすることを確認する。
+\end{enumerate}
+
+% \vspace{3mm}
+
+\subsection{この記事では扱わないこと}
+
+様相論理の「クリプキ意味論」（関係意味論）については触れません（この記事には登場せず，定義もしません）。もし様相論理に関心があるが勉強したことがない場合，この記事より先に，大西琢朗『論理学』や小野寛晰『情報科学における論理』をまず読んでおくことをおすすめします。
+
+% \vspace{5mm}
+
+% \clearpage
+
+\section{そもそも近傍意味論を考える動機}
+
+様相論理の近傍意味論を考えることには，2つの動機がある。
+
+% \vspace{3mm}
+
+\subsection{正規様相論理よりも弱い体系に意味論を与えること}
+
+近傍意味論を考える差し当たりの動機は，$K$よりも弱い体系を作ることである。関係意味論（クリプキ意味論）だと，$K$より弱い体系について，適切なしかたで意味論を与えることができない。そのため，$K$より弱い体系に意味論を与えたいならば，それとは別のしかたで意味論を考える必要がある。
+
+より具体的に言えば，必然化則「$A\vDash B$ならば$\Box A\vDash\Box B$」が成立しないような意味論を作りたい。その発端（のひとつ）が「認識論理」である。これは，様相論理の「〜が必然的である」を表す演算子$\Box$を，「〜を知っている」という知識の演算子として理解した論理体系である。
+
+認識論理を考えるにあたって，必然化則「$A\vDash B$ならば$\Box A\vDash\Box B$」を認めてしまうと，$A$を知っているならば，$A$から論理的に帰結するあらゆる文$B$も知っていることになってしまい，それだとわれわれの認識のあり方と乖離してしまうことになる。われわれの認識のあり方に合致した自然な認識論理を考えたいのであれば，必然化則「$A\vDash B$ならば$\Box A\vDash\Box B$」が成り立たないような様相論理の体系が望まれる。そのような嬉しい性質を持った意味論のひとつが、近傍意味論である。
+
+% \vspace{3mm}
+
+\subsection{様相論理そのものを分析する手段として用いること}
+
+すぐ後で定義するが，近傍意味論は，関係意味論（クリプキ意味論）の一般化であると言える。関係意味論では，可能世界のあいだの2項関係$R$を考えるのに対し，近傍意味論では，可能世界の近傍系$N(w)$を考える。近傍意味論のこのような複雑な道具立ては，単に弱い体系に意味論を与えることができるだけでなく，\textbf{様相論理そのものを分析する手段としても使うことができる}。これこそが，近傍意味論を考えることの重要な第2の動機である。
+
+とりわけこの記事では，$S4$を近傍意味論で扱うことにより，関係意味論のときとは違った特徴づけが可能になるということを中心に見ていくことにする。
+
+% \vspace{5mm}
+
+\section{近傍意味論の定義および簡単な例}
+
+以下ではまず，最も弱い体系$E$の意味論（$E$-近傍意味論）から話を始める。なお，$N$の満たす条件に制約を課すことにより，様々な体系をつくることができる。
+
+% \vspace{3mm}
+
+\subsection{定義}
+
+\begin{definition}[モデルとフレームの定義]
+	$M=\langle W,N,V \rangle$が$E$-近傍モデルであるとは，
+	\begin{itemize}
+		\item $W$が，可能世界の（空でない）集合であり，
+		\item $N$が，$W$から$\mathcal{P}(\mathcal{P}(W))$への関数であり，
+		\item $V$が，すべての原子式から$\mathcal{P}(W)$への関数である。
+	\end{itemize}
+	特に，$F=\langle W,N\rangle$を$E$-近傍フレームという。（補足: モデルのうち$V$を除いたもの。）
+\end{definition}
+
+\begin{definition}[論理式の解釈]
+	近傍モデル$M=\langle W,N,V\rangle$での各世界における論理式の解釈（真偽）を，次のように定める。まず，様相演算子のつかない論理式の真偽については，通常のクリプキ意味論の場合と同様に，以下の帰納的定義により定める。
+	\begin{itemize}
+		\item $w\Vdash_M p \iff w\in V(p)$
+		\item $w\Vdash_M A\land B\iff w\Vdash_M A$かつ$w\Vdash_M B$
+		\item $w\Vdash_M A\lor B\iff w\Vdash_M A$または$w\Vdash_M B$
+		\item $w\Vdash_M A\to B\iff w\not\Vdash_M A$または$w\Vdash_M B$
+		\item $w\Vdash_M \lnot A\iff w\not\Vdash_M A$
+	\end{itemize}
+	次に，様相演算子のついた論理式の真偽は，以下の通り。
+	\begin{itemize}
+		\item $w\Vdash_M \Box A \iff \llbracket A \rrbracket^M \in N(w)$
+		\begin{itemize}
+			\item[$\bullet$~] ただし任意の論理式$\varphi$について$\llbracket \varphi\rrbracket^M:=\{ w\in W\mid w\Vdash \varphi\}$と定められているものとする。\\これを truth-set と呼ぶ。\vspace{2mm}
+		\end{itemize}
+		\item $w\Vdash_M\Diamond A\iff \llbracket\lnot A\rrbracket^M\not\in N(w)$
+		\begin{itemize}
+			\item[$\bullet$~] 補足: これは上記の$\Box$のときの双対。\vspace{2mm}
+		\end{itemize}
+	\end{itemize}
+\end{definition}
+
+\begin{definition}[推論の妥当性]
+	近傍フレーム$F=\langle W,N \rangle$における推論の妥当性（$A\vDash B$）は以下で定める。\\$A\vDash_F B \iff$任意の論理式$A,\,B$に関し，任意の$V$と$w$について，$w\Vdash_{\langle F,V \rangle} A$ならば$w\Vdash _{\langle F,V \rangle} B$である。
+\end{definition}
+
+\begin{supplement}
+	これは対偶を取ったほうがわかりやすいかもしれない。$A\not\vDash_F B \iff$ある論理式$A,\,B$に関し，ある$V$と$w$について，$w\Vdash_{\langle F,V\rangle} A$かつ$w \not\Vdash_{\langle F,V \rangle} B$である。なお，このようなモデル$\langle F,V\rangle$のことを「反例モデル」と呼ぶことにする。気持ちとしては，$A$から$B$への推論が妥当でないことをあらわしているモデル，ということ。
+\end{supplement}
+
+\subsection{簡単な例}
+
+\begin{example}[簡単な例・その1]
+	次のような$E$-近傍モデル$M=\langle W,N,W\rangle$を考える。
+	\begin{itemize}
+		\item $W=\{w_1,w_2\}$
+		\item $N(w_1)=\{\{w_2\}\}$
+		\item $N(w_2)=\{\{w_1\}\}$
+		\item $V(p)=\{w_2\}$
+	\end{itemize}
+	このとき，
+	\begin{itemize}
+	\item $w_1\Vdash_M\Box p$である。
+	\begin{itemize}
+		\item[$\bullet$~] なぜなら，$\llbracket p \rrbracket ^M=\{w_2\}\in N(w_1)$であるため。\vspace{2mm}
+	\end{itemize}
+	\item $w_2\not\Vdash_M\Box p$である。
+	\begin{itemize}
+		\item[$\bullet$~] なぜなら，$\llbracket p \rrbracket ^M=\{w_2\}\not\in N(w_2)$であるため。\vspace{2mm}
+	\end{itemize}
+	\end{itemize}
+\end{example}
+
+% \vspace{1mm}
+
+\begin{example}[簡単な例・その2]
+	次のような$E$-近傍モデル$M=\langle W,N,W\rangle$を考える。
+	\begin{itemize}
+		\item $W=\{w_1,w_2,w_3\}$
+		\item $N(w_1) = \{\{w_2\},\{w_3\},\{w_1,v_3\}\}$
+		\item $N(w_2)=\{\{w_1,w_3\},\{w_1,w_2\},\{w_1\}\}$
+		\item $N(w_3)=\{\{w_1\},\{w_2,w_3\},\emptyset\}$
+		\item $V(p)=\{w_1,w_2\}$
+		\item $V(q)=\{w_2,w_3\}$
+	\end{itemize}
+   	このとき，
+	\begin{itemize}
+		\item $w_2\Vdash \Box p$である。
+		\begin{itemize}
+			\item[$\bullet$~] なぜなら，$\llbracket p\rrbracket^M=\{w_1,w_2\}\in N(w_2)$であるため。\vspace{2mm}
+		\end{itemize}
+		\item $w_2\Vdash\Diamond p$である。
+		\begin{itemize}
+			\item[$\bullet$~] なぜなら，$\llbracket \lnot p \rrbracket ^M =\{w_3\} \not\in N(w_2)$であるため。\vspace{2mm}
+		\end{itemize}
+		\item $w_3\Vdash \Diamond p$である。
+		\begin{itemize}
+			\item[$\bullet$~] なぜなら，上と同様に，$\llbracket\lnot p\rrbracket ^M=\{w_3\}\not\in N(w_3)$であるため。\vspace{2mm}
+		\end{itemize}
+		\item $w_3\Vdash\Box\Diamond p$である。
+		\begin{itemize}
+			\item[$\bullet$~] なぜなら，$\llbracket\Diamond p\rrbracket ^M=\{w_2,w_3\}\in N(w_3)$であるため。\vspace{2mm}
+		\end{itemize}
+		\item $w_1\Vdash\Box\Box p$である。
+		\begin{itemize}
+			\item[$\bullet$~] なぜなら，$\llbracket\Box p\rrbracket^M=\{w_2\}\in N(w_1)$であるため。\vspace{2mm}
+		\end{itemize}
+	\end{itemize}
+\end{example}
+
+% \clearpage
+
+\section{近傍意味論で必然化則が成り立たないこと}
+
+\begin{theorem}
+	$E$-近傍フレームにおいて「$A\vDash B$ならば$\Box A\vDash \Box B$」は成り立たない。
+\end{theorem}
+
+\begin{proof}
+	原子式$p,q$について，$p\vDash_F q$かつ$\Box p\not\vDash_F \Box q$となるように，「反例モデル」をつくればいい。具体的には，たとえば以下が「反例モデル」になる。（反例モデルのつくり方はいくらでもあるので，これはあくまで一例。）
+	\begin{itemize}
+		\item $W=\{w_1,w_2,w_3\}$
+		\item $N(w_1)=\{\{w_1\},\{w_2\},\{w_1,w_3\}\}$
+		\item $N(w_2)=\{\{w_1\},\{w_2\},\{w_1,w_2\},\{w_2,w_3\}\}$
+		\item $N(w_3)=\{\{w_3\},\{w_2,w_3\}\}$
+		\item $V(p)=\{w_1\}$
+		\item $V(q)=\{w_1,w_2\}$
+	\end{itemize}
+	実際に，これが反例モデルであることを確かめよう: 
+	\begin{itemize}
+		\item $p\vDash _F q$である。
+		\begin{itemize}
+			\item[$\bullet$~] というのも，$\llbracket p\rrbracket^M\subseteq \llbracket q \rrbracket^M$であるから，任意の$w_i\in W$について，$w_i\Vdash_M p$ならば$w_i\Vdash_M q$である。\vspace{2mm}
+		\end{itemize}
+		\item $\Box p\not\vDash_F \Box q$である。
+		\begin{itemize}
+			\item[$\bullet$~] まず，$w_1\Vdash_M\Box p$である。
+			\begin{itemize}
+				\item[$\bullet$~] なぜなら，$\llbracket p\rrbracket^M=\{w_1\}\in N(w_1)$であるため。\vspace{2mm}
+			\end{itemize}
+			\item[$\bullet$~] また，$w_1\not\Vdash_M\Box q$である。
+			\begin{itemize}
+				\item[$\bullet$~] なぜなら，$\llbracket q\rrbracket ^M=\{w_1,w_2\}\not\in N(w_1)$であるため。
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\end{proof}
+
+なお参考までに，関係フレームだと「$A\vDash B$ならば$\Box A\vDash \Box B$」は成立する。（証明略）
+
+\vspace{4mm}
+
+\begin{screen}
+	【この章のまとめ】
+	\begin{itemize}
+		\item この章では，必然化則「$A\vDash B$ならば$\Box A\vDash \Box B$」が，関係意味論では成り立つが，近傍意味論では成り立たないことがわかった。
+	\end{itemize}
+\end{screen}
+
+
+
+\section{S4フレームなら，位相空間論の意味での「近傍系」になること}
+
+ここで用語を定義しておく。
+
+\begin{definition}[近傍系と近傍]
+	$N(w)$を$w$の「近傍系」と呼ぶ。また，可能世界の集合$X~(\subseteq W)$について，$X\in N(w)$ならば，$X$を$w$の「近傍」と呼ぶ。
+\end{definition}
+
+なお，一般にはこの「近傍系」は，位相空間論における「近傍系」とは異なる。ただし，フレーム$\langle W,N \rangle$が$S4$フレームであれば，このフレームの「近傍系」は位相空間論の意味での「近傍系」になる。（以下で示す）
+
+\begin{theorem}
+	フレーム$\langle W,N \rangle$が$S4$フレームであれば，つまり任意の$w \in W$について$N(w)$が以下の\uline{5つの条件}をすべて満たすならば，このフレームの「近傍系」は位相空間論の意味での「近傍系」になる。
+	\begin{enumerate}
+		\item $W\in N(w)$
+		\item $\forall X\in N(w)~(\,w\in X\,)$
+		\item $\forall X\in N(w) ~ (\, X\subseteq Y\implies Y\in N(w)\,)$
+		\item $\forall X,Y\in N(w)~(\,X\cap Y \in N(w)\,)$
+		\item $\forall X\subseteq W~(\,X\in N(w)\implies \{v\mid X\in N(v)\}\in N(w)\,)$\vspace{2mm}
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	近傍フレーム$\langle W,N\rangle$が$S4$フレームである（つまり上記の5つの条件をすべて満たす）とする。このとき，ある位相空間$\langle W,\mathcal T_N\rangle$が存在し，$N(w)=N_{\mathcal{T}_N}(w)$を満たす，ということを示したい。ただし$\mathcal T_N$は以下で与えられたものとする: 
+	\[\mathcal T_N=\{\, X \mid \forall w\in W~(\,w\in X \Rightarrow X\in N(w)\,)\,\}\]
+	なお一般に，位相空間$\langle W,\mathcal T\rangle$から近傍系$N_\mathcal T (w)$をつくるやり方は，次の通り: \\$w\in W$について，$\mathcal T_w = \{\,\mathcal O\mid  w\in \mathcal O\in \mathcal T\,\}$とし，$N _\mathcal T (w)=\{\,X \mid \exists \mathcal O\in \mathcal T_w ~s.t.~ \mathcal O\subseteq X\,\}$と定める。\vspace{5mm}\\
+	まずは$\langle W,\mathcal T_N\rangle$が位相空間であることを示す。
+	\begin{itemize}
+		\item $\emptyset \in \mathcal T_N$である。（これは自明。）
+		\item $W\in\mathcal T_N$である。（このことは，上の条件1より任意の$w\in W$について$W\in N(w)$であることと，$\mathcal T_N$の定義から，従う。）
+		\item $\mathcal O_1,\mathcal O_2\in\mathcal T_N$と仮定し，$v\in\mathcal O_1\cap\mathcal O_2$とする。このとき，$v\in\mathcal O_1$かつ$v\in\mathcal O_2$である。よって，$\mathcal O_1\in N(v)$かつ$\mathcal O_2\in N(v)$である。このとき，上の条件 4 より，$\mathcal O_1\cap \mathcal O_2 \in N(v)$である。したがって，$\mathcal O_1\cap\mathcal O_2 \in \mathcal T_N$である。
+		\item ある添字集合${I}$について$\{\mathcal O_i\}_{i\in I}\subseteq \mathcal T_N$と仮定し，$v\in\bigcup_{i\in I}\mathcal O_i$とする。このとき，ある$i\in I$について$v\in\mathcal O_i$である。いま，$\mathcal O_i\in\mathcal T_N$であるから，$\mathcal O_i\in N(v)$である。したがって，$\mathcal O_i\subseteq \bigcup_{i\in I} \mathcal O_i$と条件3より，$\bigcup_{i\in I}\mathcal O_i \in N(v)$である。\vspace{3mm}
+	\end{itemize}
+	次に，この位相空間$\langle W,\mathcal T_N\rangle$からつくられた近傍系$N_{\mathcal T_N}(w)$が，任意の$w\in W$について$N(w)=N_{\mathcal T_N}(w)$を満たすことを確かめる。
+	\begin{itemize}
+		\item $N_{\mathcal T_N}(w) \subseteq N(w)$であることの証明:
+		\begin{itemize}
+			\item[$\bullet$~] まず$w\in W$とする。もし$X\in N_{\mathcal T_N}(w)$ならば，ある$\mathcal O\in\mathcal T_N$が存在し，$w\in \mathcal O\subseteq X$を満たす。（これは$N_{\mathcal T_N}(w)$の定義より自明。）いま，$\mathcal O\in \mathcal T_N$と$w\in\mathcal O$より，$\mathcal O\in N(w)$であることがわかる。（これは$\mathcal T_N$の定義より自明。）よって，$N_{\mathcal T_N}(w)\subseteq N(w)$である。\vspace{2mm}
+		\end{itemize}
+		\item $N(w)\subseteq N_{\mathcal T_N}(w)$であることの証明:
+		\begin{itemize}
+			\item[$\bullet$~] まず$w\in W$とする。$X\in N(w)$とする。ある$\mathcal O\in \mathcal T_N$が存在し，$w\in \mathcal O\subseteq X$が成り立つことを示さなくてはいけない。$\mathcal O=\{v\mid X\in N(v)\}$と定める。いま，$X\in N(w)$であるから，$w\in \mathcal O$である。そこで，もし$v\in\mathcal O$ならば，$X\in N(v)$かつ$v\in \bigcap N(v)\subseteq X$である（条件2と4より）。いま，$X\in N(w)$であるから，条件5より，$\mathcal O=\{v\mid X\in N(v)\}\in N(w)$である。よって，$X\in N_{\mathcal T_N}(w)$である。したがって，$N(w)\subseteq N_{\mathcal T_N}(w)$である。
+		\end{itemize}
+	\end{itemize}
+	以上より示された。
+\end{proof}
+
+\vspace{4mm}
+
+\begin{screen}
+	【この章のまとめ】
+	\begin{itemize}
+		\item $S4$フレームにおいては，任意の$w\in W$について，近傍系$N(w)$は，位相空間の意味での近傍系と一致することがわかった。
+		\item つまり$S4$の意味論は，可能世界全体$W$に位相を入れたものを考えているとも言える。
+	\end{itemize}
+\end{screen}
+
+\section{位相空間論の「開核演算子」と「閉包演算子」を様相演算子と同一視できること}
+
+前の章では，\textbf{$S4$フレームの「近傍系」が位相空間論の「近傍系」になる}という話を紹介した。だが，それだけだと何が面白いのかまだ漠然としたままである。そこで，この章ではさらにもう一歩踏み込んで，\textbf{位相空間論の「開核演算子・閉包演算子」が，様相演算子$\Box,\Diamond$と同じふるまいをする}ことを確認しよう。\vspace{4mm}
+
+\subsection{位相空間論の簡単な復習}
+
+準備としてまずは，位相空間論の簡単な復習から始める。
+%（なお，ここで位相空間の台集合を$W$と表記しているのは，後の議論とのスムーズな接合を図るためである。表記法が多少奇妙に思われるかもしれないが，扱っている中身としてはごく標準的に学部1年生が位相空間論の授業で学ぶような内容そのものであるから，特に心配はいらない。）
+（多くの学部1年生が大学の授業で学ぶ程度の簡単な内容）
+
+\begin{definition}[開核と開核演算子]
+	$\langle W,\mathcal T\rangle$を位相空間とし，$X$をその任意の部分集合とする。このとき「$X$に含まれる最大の開集合」を$X$の開核（内部）といい$X^\circ$と書く。（なお，$x\in X^\circ$を$X$の内点という。）\\
+    また，$X$にその開核$X^\circ$を対応させる写像を，開核演算子という。$i:\mathcal{P}(W)\to\mathcal P(W);~X\mapsto X^\circ$
+\end{definition}
+
+\begin{proposition}[開核演算子の性質]
+	次の性質が成り立つ。（証明略）\label{開核演算子の性質}
+	\begin{itemize}
+		\item $W^\circ=W$
+		\item 任意の$X\in\mathcal P(W)$について，$X^\circ\subseteq X$
+		\item 任意の$X,Y\in\mathcal P(W)$について，$(X\cap Y)^\circ=X^\circ\cap Y^\circ$
+		\item 任意の$X\in\mathcal P(W)$について，$X^{\circ\circ}=X^\circ$
+	\end{itemize}
+\end{proposition}
+
+\begin{definition}[閉包と閉包演算子]
+	$\langle W,\mathcal T\rangle$を位相空間とし，$X$をその任意の部分集合とする。このとき「$X$を含んでいる最小の閉集合」を$X$の閉包（触集合）といい$\overline{X}$と書く。（なお，$x\in \overline X$を$X$の触点という。）\\また，$X$にその閉包$\overline X$を対応させる写像を，閉包演算子という。$k:\mathcal{P}(W)\to\mathcal P(W);~X\mapsto \overline X$
+\end{definition}
+
+\begin{proposition}[閉包演算子の性質]
+	以下の性質が成り立つ（証明略）
+	\begin{itemize}
+		\item $\overline \emptyset=\emptyset$
+		\item 任意の$X\in\mathcal P(W)$について，$X\subseteq \overline X$
+		\item 任意の$X,Y\in\mathcal P(W)$について，$\overline{X\cup Y}=\overline{X}\cup\overline{Y}$
+		\item 任意の$X\in\mathcal P(W)$について，$\overline{\overline{X}}=\overline X$
+	\end{itemize}
+\end{proposition}
+
+\begin{example}
+	$W=\{w_1,w_2,w_3,w_4,w_5\}$に対し，$\mathcal{T}=\{\emptyset,\{w_1\},\{w_1,w_2\},\{w_1,w_2,w_4\},\{w_1,w_2,w_4,w_5\},W\}$とおくと，$\langle W,\mathcal T\rangle$は位相空間となる。また，部分集合$X=\{w_1,w_2,w_5\}$について，その開核は$X^\circ=\{w_1,w_2\}$であり，閉包は$\overline{X}=\{w_1,w_2,w_3,w_4,w_5\}$である。
+\end{example}
+
+\clearpage
+\subsection{様相演算子のついた論理式のtruth-setをつくる操作}
+
+さて，上記では$W$の任意の部分集合$X$について，その開核$X^\circ$と閉包$\overline X$を作り出す演算子（開核演算子$i$と閉包演算子$k$）を定義したわけだが，これはまさに，$\varphi$の truth-set から，$\Box\varphi$と$\Diamond\varphi$のtruth-setをつくる操作と同じである。つまり，$X:=\llbracket\varphi\rrbracket^M\,(\subseteq W)$とした場合に，$X^\circ=\llbracket\Box\varphi\rrbracket$であり，$\overline{X}=\llbracket\Diamond\varphi\rrbracket$である。このことを以下の具体例で確認しよう。
+
+\begin{example}
+	次のような$S4$フレームを考える。
+	\begin{itemize}
+		\item $W=\{w_1,w_2,w_3\}$
+		\item $N(w_1)=\{\{w_1\},\,\{w_1,w_2\},\,\{w_1,w_3\},\,\{w_1,w_2,w_3\}\}$
+		\item $N(w_2)=\{\{w_2\},\,\{w_1,w_2\},\,\{w_2,w_3\},\,\{w_1,w_2,w_3\}\}$
+		\item $N(w_3)=\{\{w_1,w_2,w_3\}\}$
+	\end{itemize}
+	念のため，上のフレームが$S4$の条件をちゃんと満たしていることを確かめよう:
+	\begin{itemize}
+		\item 任意の$w\in W$について，
+		\begin{enumerate}
+			\item $W\in N(w)$
+			\item すべての$X\in N(w)$について，$w\in X$
+			\item $X\in N(w)$であり，かつ$X\subseteq Y\,(\,\subseteq W\,)$ならば，$Y\in N(w)$
+			\item $X,Y\in N(w)$ならば$X\cap Y\in N(w)$
+			\item 任意の$X\in N(w)$について，ある$Y\in N(w)$が存在し，任意の$y\in Y$について$X\in N(y)$
+		\end{enumerate}
+	\end{itemize}
+	いま，考えるべき位相は$\mathcal T_N=\{X\subseteq W\mid\forall w\in W~(\,w\in X\Rightarrow X\in N(w)\,)\,\}$であったことを思い出すと，$W$に入る位相構造は，具体的に以下のものである。\[\mathcal T_N=\{\,\emptyset,\,\{w_1\},\,\{w_2\},\{w_1,w_2\},\,\{w_1,w_2,w_3\}\,\}\]
+	ここで，各原子式に対し，付値$V$を以下のように定めることにする。
+	\begin{itemize}
+		\item $V(p)=\{w_1,w_2\}$
+		\item $V(q)=\{w_1\}$
+		\item $V(r)=\{w_3\}$
+		\item $V(s)=\{w_1,w_3\}$
+		\item $V(t)=\{w_1,w_2,w_3\}$
+		\item $V(u)=\emptyset$
+	\end{itemize}
+	このとき，論理式$\varphi$のtruth-setから，$\Box \varphi$と$\Diamond \varphi$のtruth-setを，それぞれ以下のやり方でつくることができる。
+	\begin{itemize}
+		\item $\llbracket p\rrbracket^M= \{w_1,w_2\}$であるため，$\llbracket\Box p\rrbracket^M=\{w_1,w_2\}$であり，$\llbracket \Diamond p\rrbracket^M=\{w_1,w_2,w_3\}$である。
+		\item $\llbracket q\rrbracket^M= \{w_1\}$であるため，$\llbracket\Box q\rrbracket^M=\{w_1\}$であり，$\llbracket \Diamond q\rrbracket^M=\{w_1,w_3\}$である。
+		\item $\llbracket r\rrbracket^M= \{w_3\}$であるため，$\llbracket\Box r\rrbracket^M=\emptyset$であり，$\llbracket \Diamond r\rrbracket^M=\{w_3\}$である。
+		\item $\llbracket s\rrbracket ^M=\{w_1,w_3\}$であるため，$\llbracket\Box s\rrbracket^M=\{w_1\}$であり，$\llbracket \Diamond s\rrbracket^M=\{w_1,w_3\}$である。
+		\item $\llbracket t \rrbracket^M=\{w_1,w_2,w_3\}$であるため，$\llbracket\Box t\rrbracket^M=\{w_1,w_2,w_3\}$であり，$\llbracket \Diamond t\rrbracket^M=\{w_1,w_2,w_3\}$である。
+		\item $\llbracket u \rrbracket ^M=\emptyset$であるため，$\llbracket \Box u\rrbracket^M=\emptyset$であり，$\llbracket \Diamond u\rrbracket ^M= \emptyset$である。
+	\end{itemize}
+\end{example}
+
+\subsection{推論の妥当性を，開核演算子の性質から導く}
+
+最後に，$S4$の体系における推論の妥当性を，開核演算子の性質から導くことができることを確認する。
+
+\begin{proposition}
+	様相論理$S4$において，以下が成り立つ。
+	\begin{enumerate}
+		\item $\Box A\vDash A$
+		\item $\Box A \vDash \Box\Box A$
+		\item $\Box\Box A\vDash \Box A$
+		\item $\Box (A\land B)\vDash \Box A\land\Box B$
+		\item $\Box A \land \Box B \vDash \Box (A\land B)$
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	1から5まですべて，開核演算子の性質（命題\ref{開核演算子の性質}）より直ちに従う。（というのも，推論の妥当性はtruth-setどうしの包含関係からわかるため。）
+\end{proof}
+
+\vspace{2mm}
+
+\begin{screen}
+	【この章のまとめ】
+	\begin{itemize}
+		\item 位相空間論の「開核演算子・閉包演算子」が，$S4$のときの様相演算子$\Box,\Diamond$と同じふるまいをすることが明らかになった。具体的には，
+		\begin{enumerate}[(1)~ ]
+			\item 開核演算子と閉包演算子が，まさに$\Box$と$\Diamond$のtruth-setをつくる操作と同じであることがわかった。
+			\item $S4$の体系における推論の妥当性が，開核演算子の性質から導かれることを確かめた。
+		\end{enumerate}
+	\end{itemize}
+\end{screen}
+
+
+\section{終わりに}
+
+本記事では，近傍意味論の道具立てを導入したうえで，位相空間の性質を用いて$S4$を分析した。これを読んでいる読者の中には「どうしてこんな遠回りをしたのか」と思う人もいるだろう。たしかに，単に$S4$を扱いたいだけだとすれば，関係意味論だけあれば事足りるため，わざわざ近傍意味論を導入してまで$S4$の性質を調べるのは無駄なことに思えるかもしれない。しかし，いったん近傍意味論という複雑な道具立てを導入したことにより，私たちがこれまでごく当たり前のように使ってきた$\Box$と$\Diamond$という様相演算子に対して異なる意味づけを与えることが可能になり，その結果として「様相演算子の意味」の新たな側面を見出すことができたと言えよう。
+
+そもそもわれわれが，（関係意味論のような「標準的なもの」をこえて）近傍意味論のような「よりマイナーなもの」を追究し，あるいは（古典論理のような「座りの良いもの」にとどまらず）非古典論理のような「逸脱したもの」へと探究を進めていくことの動機は，単に「奇妙な性質を持った体系を次々と作りたいから」ということではなく，それよりもむしろ「標準的と思われていたものを異なる視座から捉え直したいから」という側面のほうが大きい。この記事ではまさに，「近傍意味論を使って$S4$を調べる」という簡単な事例を実際に扱うことを通じて，そのような試みの一端を辿ってみた。
+
+%-----
+% \clearpage
+\begin{thebibliography}{99}
+    \item Pacuit, E. (2017) \textit{Neighborhood Semantics for Modal Logic}, Springer. 
+    \item Priest, G. (2016) ``Neighbourhood Semantics'' in \textit{Towards Non-Being} (2nd edition), pp.281--296 (Ch.15), Oxford University Press. 
+    \item 松坂 (1968)『集合・位相入門』岩波書店.
+\end{thebibliography}
+%-----
+
+
+\end{document}

@@ -1,0 +1,429 @@
+%==========
+%LuaLaTeXで実行する！！
+% \documentclass[
+% 		book,
+% 		head_space=20mm,
+% 		foot_space=20mm,
+% 		gutter=10mm,
+% 		line_length=190mm
+% ]{jlreq}
+%----------
+%----------
+%%%%% bookの設定
+%  \NewPageStyle{mystyle}{
+% 	yoko,
+% 	running_head_position={top-center},
+% 	nombre_position={top-fore-edge},
+% 	odd_running_head={_section},
+% 	even_running_head={_chapter}
+% 	}
+%  \pagestyle{mystyle}
+%----------
+\usepackage{luatexja}
+%==========
+%----------
+%目次のレイアウト調整
+\setcounter{tocdepth}{4}
+%-----
+\makeatletter
+\def\l@part{%
+  % |\@dottedtocline|の代わりに独自の命令を使う
+  \my@dottedtocline
+  {0}					%見出しのレベル
+  {1.0\baselineskip}		%前の行とのアキ
+  {0pt}					%字下げ
+  {6\zw}				%ラベル（「第1章」等）の幅
+%   {\sffamily\bfseries\gtfamily\large}	%フォント
+  {\Large}				%フォント
+%   {\rmfamily}			%フォント
+}
+\def\l@chapter{%
+  % |\@dottedtocline|の代わりに独自の命令を使う
+  \my@dottedtocline
+  {1}					%見出しのレベル
+  {0.2\baselineskip}		%前の行とのアキ
+  {0pt}					%字下げ
+  {6\zw}				%ラベル（「第1章」等）の幅
+  {\large}				%フォント
+%   {\rmfamily}			%フォント
+}
+\def\l@section{%
+  % |\@dottedtocline|の代わりに独自の命令を使う
+  \my@dottedtocline
+    {2}					%見出しのレベル
+    {0.1\baselineskip}	%前の行とのアキ
+    {0pt}				%字下げ
+    {6\zw}				%ラベル（「第1章」等）の幅
+    {\rmfamily\normalsize}	%フォント
+}
+\def\l@subsection{%
+  % |\@dottedtocline|の代わりに独自の命令を使う
+  \my@dottedtocline
+    {3}					%見出しのレベル
+    {0\baselineskip}	%前の行とのアキ
+    {0pt}				%字下げ
+    {6\zw}				%ラベル（「第1章」等）の幅
+    {\rmfamily\normalsize}	%フォント
+}
+\def\l@subsubsection{%
+  % |\@dottedtocline|の代わりに独自の命令を使う
+  \my@dottedtocline
+    {4}					%見出しのレベル
+    {0\baselineskip}	%前の行とのアキ
+    {0pt}				%字下げ
+    {6\zw}				%ラベル（「第1章」等）の幅
+    {\rmfamily\small}			%フォント
+}
+% jlreqの|\@dottedtocline|を元に独自の命令を定義
+\def\my@dottedtocline#1#2#3#4#5#6#7{%
+  \jlreq@set@top@contents{#1}%
+  \ifnum #1>\c@tocdepth \else
+    \vskip #2\relax
+    {\leftskip #3\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+    \parindent #3\relax\@afterindenttrue
+    \interlinepenalty\@M
+    \leavevmode
+    \@lnumwidth #4\relax
+    \@tempcnta=#1\relax
+    \advance\@tempcnta by -\jlreq@top@contents
+    \@tempdima=1\jlreq@mol
+    \multiply \@tempdima by \@tempcnta
+    \advance\leftskip \@lnumwidth \hbox{}\hskip -\leftskip
+    \advance\leftskip\@tempdima
+    {#5#6}\nobreak
+    \leaders\hbox{$\m@th\mkern \@dotsep mu$\null\inhibitglue ・\inhibitglue\null$\m@th\mkern \@dotsep mu$}%
+    \hfill\nobreak
+    \hb@xt@\@pnumwidth{\hss\normalfont\normalcolor #7}%
+    \par}%
+  \fi}
+\makeatother
+%----------
+%==========
+% パッケージ集
+%==========
+%数式フォント
+\usepackage{lxfonts}
+\usepackage{bm}%太字のベクトルを表示
+\usepackage{mathrsfs}%アルファベット筆記書体など
+\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
+\DeclareMathSymbol{\strictif}{\mathrel}{symbolsC}{74}
+% 厳密含意 restrict implication の 釣り針矢印 \strictif
+%日本語フォント
+\usepackage{luatexja-fontspec}
+\usepackage[hiragino-pro]{luatexja-preset}
+\setmainjfont{UDDigiKyokashoNP-R}[BoldFont={UDDigiKyokashoNP-B}]
+%欧文フォント
+% \usepackage[LGR,LGRx,T2A,T1,OT1]{fontenc}
+\usepackage[LGR,T2A,T1]{fontenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[utf8x]{inputenc}
+% \usepackage[lutf8]{luainputenc} % lutf8 指定
+\usepackage{tgheros}
+\usepackage{lmodern}
+% \usepackage{pxfonts}
+% \usepackage{mathpazo}
+% \setmainfont[Scale=MatchLowercase]{Linux Libertine O} % \rmfamily のフォント
+% \setsansfont[Scale=MatchLowercase]{Linux Biolinum O}  % \sffamily のフォント
+%ギリシャ語フォント
+% \usepackage[prefernoncjk]{pxcjkcat} %ギリシャ文字を欧文扱いにする
+% \usepackage{pxcjkcat}
+% \cjkcategory{sym18}{cjk}
+% \usepackage{polyglossia}
+\usepackage[polutonikogreek,greek,english,japanese]{babel}
+% \languageattribute{greek}{polutoniko}
+% ¥usepackage[boldLipsian,10pt,GlyphNames]{teubner}
+\usepackage{teubner}
+\usepackage{substitutefont}
+\substitutefont{LGR}{\rmdefault}{porson}
+% ¥substitutefont{LGR}{¥rmdefault}{neohellenic}
+% 例		¥textgreek{paide'uw}	ギリシャ文字で表示
+% 例		¥greeknumeral{2022}		ギリシャ数字で表示
+%---------
+\usepackage{luatexja-otf}
+\usepackage{luatexja-ruby}
+\usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
+%---------
+%\languageattribute{greek}{polutoniko}
+%----------
+\usepackage{graphicx} %画像の挿入
+\usepackage{wrapfig} %図の回り込み
+\usepackage{framed,color} %枠付き文書
+\definecolor{shadecolor}{gray}{0.8}
+% \begin{oframed} 文 \end{oframed}
+% \begin{shaded} 文 \end{shaded}
+%----------
+\usepackage{setspace}
+%----------
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{tikz-cd} %可換図式
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+%---------
+\usepackage{ascmac}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{pb-diagram} %可換図式
+\usepackage{fancybox}
+\usepackage{enumerate}
+\usepackage{ulem} %下線
+%---------
+\usepackage{lipsum} %ダミーテキスト 
+% 例： \lipsum[1-5]
+%---------
+%丸囲い
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+%---------
+\renewcommand{\textgt}[1]{\textsf{\textbf{#1}}}
+%---------
+\usepackage{multicol} % n段組み 
+%\begin{multicols}{段数} 文章 \end{multicols}
+%----------
+\usepackage{vwcol}
+% \begin{vwcol}[widths={0.6,0.4},rule=0.5pt] 
+% 文章
+% \end{vwcol}
+%----------
+\usepackage{physics} %便利なパッケージ
+% \qty() , \qty|| ,\norm{} など ...... カッコ
+% \vb{} ...... 太字のベクトル
+% 数式数式  \qq{テキスト}  数式数式
+% \dd[指数]{x} ...... dx
+% \dv{x} ............ d/dx
+% \pdv{x} ........... ∂/∂x
+% \dv{f}{x} ......... df/dx
+% \pdv{f}{x} ........ ∂f/∂x
+% \mqty(a&b\\c&d) , \mqty|| 行列
+% \mqty{\imat{n}} ...... 単位行列
+% \mqty{\dmat[0]{n}} ... 対角行列
+% \mqty{\xmat*{a}{m}{n}} ... {a_mn}行列
+%----------
+\usepackage{keyval,physics2}
+\usephysicsmodule{ab,ab.braket}
+% \ab() , \ab<> , \ab[] カッコ
+%----------
+\usepackage[version=4]{mhchem} %化学反応式
+\usepackage{expl3}
+\usepackage{calc}
+% \ce{6 CO2 + 12 H2O -> C6H12O6 + 6 O2 + 6 H2O}
+%----------
+% Mathematical Logic
+\usepackage{turnstile}
+% \renewcommand{\vdash}{\sststile{}{}}
+% \renewcommand{\vDash}{\sdtstile{}{}}
+% \renewcommand{\Vdash}{\dststile{}{}}
+\usepackage{bussproofs}
+\EnableBpAbbreviations
+\renewcommand{\fCenter}{{}\Rightarrow{}}
+\renewcommand{\RL}[1]{\RightLabel{{\scriptsize (#1)}}}
+%%%%%%%%%% 自然演繹 
+% \begin{prooftree}
+% 0 \AXC { $ ... $ }  
+% 1 \UIC { $ ... $ } 
+% 2 \BIC { $ ... $ } 
+% 3 \TIC { $ ... $ } 
+% \end{prooftree}
+%%%%%%%%%% シークエント計算
+%\begin{prooftree}
+% 0 \AX $ ...\fCenter... $
+% 1 \UI $ ...\fCenter... $
+% 2 \BI $ ...\fCenter... $
+% 3 \TI $ ...\fCenter... $
+%\end{prooftree}
+%----------
+\usepackage{qtree} %タブローパッケージ
+%----------
+\renewcommand{\labelitemi}{~$\bullet$~}
+% \renewcommand{\labelitemii}{~\circ~}
+\renewcommand{\labelitemii}{~$\triangleright$~}
+% \renewcommand{\labelitemii}{~$\bullet$~} %
+% \renewcommand{\labelitemiii}{~$\bullet$~} %
+%----------
+\usepackage{emoji} %絵文字
+% \setemojifont{EmojiOneMozilla}
+\setemojifont{Noto Emoji Regular}
+%----------
+\newtheorem{definition}{定義}%[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{lemma}[definition]{補題}
+\newtheorem{corollary}[definition]{系}
+\newtheorem{example}[definition]{例}
+\newtheorem{practice}[definition]{演習問題}
+% \newtheorem*{longproof}{証明}
+\newtheorem*{answer}{解答}
+\newtheorem*{supplement}{補足}
+\newtheorem*{remark}{注意}
+%----------
+% 定理環境（tcolorbox）
+\usepackage{tcolorbox} %箱
+\tcbuselibrary{breakable,skins,theorems}
+%----------
+\tcolorboxenvironment{definition}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+\newtcolorbox{emptydefinition}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+%----------
+\tcolorboxenvironment{proposition}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+\newtcolorbox{emptyproposition}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+%----------
+\tcolorboxenvironment{theorem}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+    sharp corners,boxrule=0.6pt,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black},
+    borderline={0.5pt}{1.5pt}{black}
+}
+\newtcolorbox{emptytheorem}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+    sharp corners,boxrule=0.6pt,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black},
+    borderline={0.5pt}{1.5pt}{black}
+}
+%----------
+\tcolorboxenvironment{lemma}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+%----------
+\tcolorboxenvironment{corollary}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={1.0pt}{0pt}{black,dotted}
+}
+\newtcolorbox{emptycorollary}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={1.0pt}{0pt}{black,dotted}
+}
+%----------
+\tcolorboxenvironment{example}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+%----------
+\tcolorboxenvironment{practice}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=3mm,bottom=3mm,
+	before skip=15pt,after skip=15pt,
+	borderline={0.5pt}{0pt}{black}
+}
+%----------
+\tcolorboxenvironment{proof}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=2mm,bottom=2mm,
+	before skip=15pt,after skip=20pt,
+	% borderline west={1.5pt}{0pt}{black,dotted}
+	borderline vertical={1pt}{0pt}{black,dotted}
+	% borderline vertical={0.8pt}{0pt}{black,dotted,arrows={Square[scale=0.5]-Square[scale=0.5]}}
+	}
+%----------
+\tcolorboxenvironment{supplement}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=2mm,bottom=2mm,
+	before skip=15pt,after skip=20pt,
+	% borderline west={1.5pt}{0pt}{black,dotted}
+	% borderline vertical={0.5pt}{0pt}{black,arrows = {Circle[scale=0.7]-Circle[scale=0.7]}}
+	borderline vertical={0.5pt}{0pt}{black}
+	% borderline vertical={0.5pt}{0pt}{black},
+	% borderline north={0.5pt}{0pt}{white,arrows={Circle[black,scale=0.7]-Circle[black,scale=0.7]}}
+	}
+%----------
+\tcolorboxenvironment{remark}{
+	blanker,breakable,
+	left=3mm,right=3mm,
+	top=1mm,bottom=1mm,
+	before skip=15pt,after skip=20pt,
+	% borderline west={1.5pt}{0pt}{black,dotted}
+	% borderline vertical={0.5pt}{0pt}{black,arrows = {Circle[scale=0.7]-Circle[scale=0.7]}}
+	borderline vertical={0.5pt}{0pt}{black}
+	% borderline vertical={0.5pt}{0pt}{black},
+	% borderline north={0.5pt}{0pt}{white,arrows={Circle[black,scale=0.7]-Circle[black,scale=0.7]}}
+	}
+%----------
+% マークシート記号
+\newcommand{\egg}[1]{\raisebox{-3pt}{
+	\begin{tikzpicture}[x=1pt,y=1pt,line width=1pt]
+		\draw (0,0) ellipse (4.5 and 6);
+		\draw (0,0) node {
+			\usefont{T1}{phv}{m}{n}
+			\fontsize{9pt}{0}\selectfont #1 \/};
+	\end{tikzpicture}}}
+% マークシート記号
+\newcommand{\eggg}[1]{\raisebox{-3pt}{
+	\begin{tikzpicture}[x=1pt,y=1pt,line width=1pt]
+		\draw[fill=black!30] (0,0) ellipse (4.5 and 6);
+		\draw (0,0) node {
+			\usefont{T1}{phv}{m}{n}
+			\fontsize{9pt}{0}\selectfont #1 \/};
+	\end{tikzpicture}}}
+%-------------------- 
+% UDカラー (アクセントカラー)
+\definecolor{accentred}{rgb}{1.0, 0.3, 0.0}
+\definecolor{accentyellow}{rgb}{1.0, 0.9, 0}
+\definecolor{accentgreen}{rgb}{0.0, 0.7, 0.5}
+\definecolor{accentblue}{rgb}{0.0, 0.35, 1.0}
+\definecolor{accentsky}{rgb}{0.3, 0.76, 1.0}
+\definecolor{accentpink}{rgb}{1.0, 0.5, 0.5}
+\definecolor{accentorange}{rgb}{0.96, 0.67, 0.0}
+\definecolor{accentpurple}{rgb}{0.6, 0.0, 0.6}
+%--------------------
+% UDカラー (ベースカラー)
+\definecolor{basepink}{rgb}{1.0, 0.8, 0.75}
+\definecolor{basecream}{rgb}{1, 1, 0.5}
+\definecolor{baseyellowgreen}{rgb}{0.8, 0.94, 0.33}
+\definecolor{basesky}{rgb}{0.75, 0.9, 1.0}
+\definecolor{basebeige}{rgb}{1.0, 0.8, 0.5}
+\definecolor{basegreen}{rgb}{0.47, 0.85, 0.65}
+\definecolor{basepurple}{rgb}{0.8, 0.67, 0.9}
+%--------------------
+\definecolor{basegray}{rgb}{0.784,0.784,0.796}
+%--------------------
+% \pagestyle{empty}  %% ページ番号を消す
+% \renewcommand{¥qedsymbol}{¥parallel}
+%--------------------
+
