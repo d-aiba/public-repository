@@ -504,6 +504,10 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 
 \clearpage
 
+\subsection{終余代数の構成}
+
+\clearpage
+
 \subsection{「効果つき計算」について}
 \noindent 前節でいくつか例を挙げながら紹介したように、余代数 (coalgebra) は「1ステップの状態遷移」を表しています。\[c:X\to F(X)\] より一般に、計算 (computation) は以下で表されます。（$X=Y$ とすれば余代数です。）\[c:X\to F(Y)\] ここで「ただの関数」(pure function) と「効果つき計算」(effectful computation) を区別しておくことは重要です。%\[\textrm{pure function} \quad f:X\to Y \qquad \textrm{vs} \qquad \textrm{effectful computation} \quad c:X\to F(Y)\]
 \begin{framed}
@@ -518,6 +522,8 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 % \end{center}
 
 \noindent なお、効果つき計算 $c:X\to F(Y)$ を便宜的に $c:X\computationrightarrow Y$ と表記することもあります。（厳密に言えば、これはモナド $F$ のクライスリ圏における射を表す記法ですが、ここでは詳細の説明は省略します。）\\
+
+\clearpage
 
 \subsection{グロタンディーク・ファイブレーション入門}
 
@@ -639,7 +645,7 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 			\Set &X \ar[r,"f"'] & Y
 		\end{tikzcd}
 	\end{center}
-	\clearpage
+	% \clearpage
 	\item ここで、$(-)^*$ や $\overline{(-)}$ は ``関手的'' (functorial)、つまり恒等射と合成に整合します。
 	\begin{small}
 	\begin{align*}
@@ -675,9 +681,10 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 	% \item 
 \end{enumerate}
 
-\begin{center}
-	\hrulefill
-\end{center}
+% \begin{center}
+% 	\hrulefill
+% \end{center}
+\clearpage
 
 \noindent 以下、ファイブレーションの正確な定義を（念のため）書いておきます。ですが、上記の $p:\Pred\to\Set$ の考え方だけをきちんと押さえておけば、次節以降の内容を理解するうえで基本的には問題ないです。
 
@@ -743,9 +750,9 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 % \clearpage
 
 \begin{definition}[置換]
-	$p:\E\to\B$ をファイブレーションとし、$u:I\to J$ を $\B$ の射とします。$u$ の置換 (substitution) とは、関手 $u^\ast:\E_J\to\E_I$ であって以下を満たすものである。（ここで、$\overline u_X:u^\ast X\to X$ は$p$-カルテシアン射であって $p(\overline u_X)=u$ を満たすものである。）\vspace{3pt}
+	$p:\E\to\B$ をファイブレーションとし、$u:I\to J$ を $\B$ の射とします。$u$ の置換 (substitution) とは、関手 $u^\ast\colon\E_J\to\E_I$ であって以下を満たすものである。（ここで、$\overline u_X\colon u^\ast X\to X$ は$p$-カルテシアン射で $p(\overline u_X)=u$ を満たすものとする。）\vspace{3pt}
 	\begin{center}
-		\begin{tikzcd} 
+		\begin{tikzcd}%[row sep=15pt]
 			u^*X \ar[d,"u^*f"',dashed] \ar[r,"\overline u_X"] & X \ar[d,"f"] \\ u^*Y \ar[r,"\overline u_Y"] & Y \\[-8pt]
 			I \ar[r,"u"] & J
 		\end{tikzcd}
@@ -775,7 +782,7 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 \end{definition}
 
 \begin{remark}
-	同一の射の上にあるカルテシアン射は ``一意な同型を除いて一意'' (unique up to unique iso) である。より具体的に言うと、ファイブレーション $p:\E\to\B$ と、$\B$ の射 $u:I\to J$ が与えられ、$Y\in\E_J$ があり、2つの $p$-カルテシアン射 $\overline{u}_Y:u^\ast Y\to Y$ と $f:X\to Y$ がいずれも $u$ の上にあるとき、一意な同型射 $\alpha:X\xrightarrow{\cong} u^\ast Y$ がファイバー $\E_I$ に存在し、$f=\overline u_Y\circ\alpha$ が成り立つ。
+	同一の射の上にあるカルテシアン射は ``一意な同型を除いて一意'' (unique up to unique iso) である。より具体的に言うと、ファイブレーション $p:\E\to\B$ と、$\B$ の射 $u:I\to J$ が与えられ、$Y\in\E_J$ があり、2つの $p$-カルテシアン射 $\overline{u}_Y:u^\ast Y\to Y$ と $f:X\to Y$ がいずれも $u$ の上にあるとき、一意な同型射 $\alpha:X\xrightarrow{\cong} u^\ast Y$ がファイバー $\E_I$ に存在し、$f=\overline u_Y\circ\alpha$ が成り立つ。（証明略）
 	\begin{small}
 	\begin{center}
 		\begin{tikzcd}
@@ -823,7 +830,7 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 \end{proposition}
 
 \begin{proof}
-	$X\xmapsto{\,(pX=J)\,}J$ および $\dot FX\xmapsto{\,(p\dot FX=FpX=FJ)\,}FJ$ と考えると、
+	$X\xmapsto{\,(pX=J)\,}J$ および $\dot FX\xmapsto{\,(p\dot FX=FpX=FJ)\,}FJ$ と考えると
 	\begin{small}
 	\begin{center}
 		\begin{tikzcd}
@@ -847,7 +854,7 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 		\end{tikzcd}
 	\end{center}%\vspace{-6pt}
 	\end{small}
-	となる。（なお、$\gamma$ の自然性の証明はここでは省略する。）
+	となる。（$\gamma$ の自然性の証明はここでは省略する。）
 \end{proof}
 
 \begin{definition}[カルテシアンを保つ] \label{def:preserving-cartesian}
@@ -900,21 +907,21 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 	% Here, $\dot Ff$ is $p$-cartesian iff $\gamma_Y$ is isomorphic. (Because both of $\dot Ff$ and $\overline{Fpf}$ are above $Fpf$, and $\overline{Fpf}$ is $p$-cartesian by definition, thus ($\Rightarrow$): if $\dot Ff$ is also $p$-cartesian, then we have a unique isomorphism $\gamma_Y$; and ($\Leftarrow$): if $\gamma_Y$ is a isomorphism, then $\dot Ff$ is also $p$-cartesian.) 
 \end{proof}
 
-\clearpage
+% \clearpage
 
 \begin{definition}[関手の持ち上げ]
-	$p:\E\to\B$ をファイブレーションとする。$F:\B\to\B$ を $\B$ における自己関手とする。このとき、$\E$ における自己関手 $\dot F:\E\to\E$ が $p$ に沿った $F$ のファイバー持ち上げ (fibered lifting) であるとは、$p\circ \dot F=F\circ p$ を満たし、かつ $\dot F$ がカルテシアンを保つ（cf. \textgt{定義\ref{def:preserving-cartesian}}）ことである。
+	$p:\E\to\B$ をファイブレーションとする。$F:\B\to\B$ を $\B$ における自己関手とする。このとき、$\dot F:\E\to\E$ が $p$ に沿った $F$ のファイバー持ち上げ (fibered lifting) であるとは、$p\circ \dot F=F\circ p$ を満たし、かつ $\dot F$ がカルテシアンを保つ（cf. \textgt{定義\ref{def:preserving-cartesian}}）ことである。
 \end{definition}
 
 \begin{remark}
-	つまり、$\dot F$ は ~
+	すなわち、$\dot F$ は~
 	\begin{small}
 		\begin{tikzcd}
 			\E \ar[r,"\dot F"] \ar[d,"p"'] & \E \ar[d,"p"] \ar[ld,"\rotatebox{45}{$=$}",phantom]\\
 			\B \ar[r,"F"'] & \B
 		\end{tikzcd} 
 	\end{small}
-	~ と ~
+	~と~
 	\begin{small}
 		\begin{tikzcd}[column sep=22pt]
 			\E_J \ar[r,"u^\ast"] \ar[d,"\dot F"'] & \E_I \ar[d,"\dot F"] \ar[ld,phantom,"\rotatebox{40}{$\cong$}"',shorten=12pt] \\
@@ -922,7 +929,15 @@ $N$に正の自然数を入力してこのプログラムを実行した後に�
 		\end{tikzcd}
 	\end{small}
 	を満たす。
+	\begin{itemize}
+		\item 前者ゆえに、$\dot F_X:\E_X\to\E_{FX}$ を定義できることが従う。
+		\item 後者は、「関手の持ち上げは置換と整合的である」ことを意味する。
+	\end{itemize}
 \end{remark}
+
+% \begin{remark}
+% 	$\dot F_X:\E_X\to\E_{FX}$ である。
+% \end{remark}
 
 \clearpage
 
